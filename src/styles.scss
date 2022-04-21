@@ -7,6 +7,11 @@
 
 :root {
   --card-color: #222222;
+  --margin-cards: 20px;
+  --c-yellow: #fda536;
+  --c-green: #55e737;
+  --c-silver: #c2c2c2;
+  --c-red: #fc0025;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
@@ -15,5 +20,19 @@ body {
   font-family: "Roboto Mono", monospace;
   background-color: #000000;
   color: #ffffff;
-  padding: 20px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--c-silver);
 }

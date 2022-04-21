@@ -1,6 +1,7 @@
 export interface Summary {
   Global: Global;
   Countries: Country[];
+  Date: string;
 }
 
 export interface Global {

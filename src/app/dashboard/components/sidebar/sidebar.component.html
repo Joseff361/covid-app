@@ -1,1 +1,16 @@
-<p>sidebar works!</p>
+<div *ngIf="summary" class="sidebar">
+  <div class="sidebar__cases">
+    <div class="sidebar__title">Total positive cases by country</div>
+    <div class="sidebar__countries">
+      <div *ngFor="let country of countriesData" class="sidebar__country">
+        {{ country.Country }}:
+        <span>{{ country.TotalConfirmed | number }}</span>
+        <span>({{ country.NewConfirmed | number }})</span>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar__date">
+    <div class="sidebar__date__title">Last Update</div>
+    <b class="sidebar__date__current"> {{ summary.Date | date }} {{ time }} </b>
+  </div>
+</div>

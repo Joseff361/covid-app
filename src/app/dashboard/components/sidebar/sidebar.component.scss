@@ -1,0 +1,46 @@
+.sidebar {
+  height: 100%;
+  margin-top: var(--margin-cards);
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    margin-bottom: 10px;
+    font-weight: bolder;
+  }
+
+  &__cases {
+    padding: 10px;
+    background-color: var(--card-color);
+  }
+
+  &__countries {
+    height: 60vh;
+    overflow: auto;
+  }
+
+  &__country {
+    color: var(--c-silver);
+    margin-bottom: 10px;
+
+    & span:first-child {
+      color: var(--c-yellow);
+    }
+  }
+
+  &__date {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: var(--card-color);
+    margin-top: var(--margin-cards);
+    margin-bottom: var(--margin-cards);
+
+    &__current {
+      font-size: 20px;
+    }
+  }
+}

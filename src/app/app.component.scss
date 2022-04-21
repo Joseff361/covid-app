@@ -1,0 +1,5 @@
+.layout {
+  width: calc(100vw - 2 * var(--margin-cards));
+  height: calc(100vh - 2 * var(--margin-cards));
+  padding: var(--margin-cards);
+}
