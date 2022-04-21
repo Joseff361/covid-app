@@ -22,9 +22,9 @@ export class CovidService {
     return this.http
       .get<Status[]>(
         environment.baseURL +
-          '/country' +
+          '/country/' +
           country +
-          'status/confirmed?from=2020-03-01T00:00:00Z&to2022-04-19T00:00:00Z'
+          '/status/confirmed?from=2020-03-01T00:00:00Z&to2022-04-19T00:00:00Z'
       )
       .pipe(catchError(() => of([])));
   }

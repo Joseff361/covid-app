@@ -1,1 +1,18 @@
-<p>summary works!</p>
+<section *ngIf="summary" class="summary">
+  <div class="summary__result --yellow">
+    <span class="summary__result__title">Total Confirmed</span>
+    <b class="summary__result__value">{{ totalConfirmed | number }}</b>
+  </div>
+  <div class="summary__result --green">
+    <span class="summary__result__title">Total Recovered</span>
+    <b class="summary__result__value">{{ totalRecovered | number }}</b>
+  </div>
+  <div class="summary__result --silver">
+    <span class="summary__result__title">New Confirmed</span>
+    <b class="summary__result__value">{{ newConfirmed | number }}</b>
+  </div>
+  <div class="summary__result --red">
+    <span class="summary__result__title">Total Deaths</span>
+    <b class="summary__result__value">{{ totalDeaths | number }}</b>
+  </div>
+</section>

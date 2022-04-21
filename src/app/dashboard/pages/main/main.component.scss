@@ -2,6 +2,10 @@
   display: flex;
   flex-direction: column;
 
+  &__header {
+    background-color: var(--card-color);
+  }
+
   &__body {
     display: flex;
 

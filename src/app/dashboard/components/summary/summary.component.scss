@@ -1,0 +1,40 @@
+.summary {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+  gap: 20px;
+
+  &__result {
+    background-color: var(--card-color);
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+
+    &__title {
+      font-size: 16px;
+    }
+
+    &__value {
+      font-size: 50px;
+    }
+
+    &.--yellow {
+      color: #fda536;
+    }
+
+    &.--green {
+      color: #55e737;
+    }
+
+    &.--silver {
+      color: #c2c2c2;
+    }
+
+    &.--red {
+      color: #fc0025;
+    }
+  }
+}

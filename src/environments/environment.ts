@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseURL: 'https://api.covid19api.com/summary',
+  baseURL: 'https://api.covid19api.com',
 };
 
 /*
