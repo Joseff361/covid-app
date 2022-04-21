@@ -7,6 +7,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { SummaryComponent } from './components/summary/summary.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,9 @@ import { LineChartComponent } from './components/line-chart/line-chart.component
     SidebarComponent,
     FooterComponent,
     LineChartComponent,
+    SummaryComponent,
   ],
+  exports: [MainComponent],
   imports: [CommonModule, HttpClientModule],
 })
 export class DashboardModule {}
