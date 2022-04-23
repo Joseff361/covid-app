@@ -1,5 +1,23 @@
 .layout {
-  width: calc(100vw - 2 * var(--margin-cards));
-  height: calc(100vh - 2 * var(--margin-cards));
+  height: 100vh;
   padding: var(--margin-cards);
+}
+
+@media only screen and (max-width: 1400px) {
+  .layout {
+    width: auto;
+    height: auto;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .layout {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .layout {
+    --margin-cards: 15px;
+  }
 }

@@ -43,9 +43,24 @@
     background-color: var(--card-color);
     margin-top: var(--margin-cards);
     margin-bottom: var(--margin-cards);
+    padding: 10px;
 
     &__current {
       font-size: 20px;
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .sidebar {
+    &__country {
+      font-size: 12px;
+    }
+
+    &__date {
+      &__current {
+        font-size: 12px;
+      }
     }
   }
 }
