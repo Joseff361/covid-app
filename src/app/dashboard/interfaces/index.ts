@@ -38,3 +38,13 @@ export interface Status {
   Status: string;
   Date: string;
 }
+
+export interface CasesPerMonth {
+  label: string;
+  cases: number;
+}
+
+export interface dataMonths {
+  label: string;
+  cases: number;
+}

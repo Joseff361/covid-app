@@ -23,7 +23,10 @@ export class CovidService {
   private getCountryData(country: string): Observable<Status[]> {
     return this.http
       .get<Status[]>(
-        environment.baseURL + '/dayone/country/' + country + '/status/confirmed'
+        environment.baseURL +
+          '/total/dayone/country/' +
+          country +
+          '/status/confirmed'
       )
       .pipe(catchError(() => of([])));
   }

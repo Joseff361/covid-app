@@ -15,7 +15,6 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.covidService.getSummary().subscribe((data) => {
       this.summary = data;
-      console.log(this.summary);
     });
   }
 
