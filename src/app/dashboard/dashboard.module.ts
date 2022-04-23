@@ -9,6 +9,7 @@ import { LineChartComponent } from './components/line-chart/line-chart.component
 import { SummaryComponent } from './components/summary/summary.component';
 import { NgChartsModule } from 'ng2-charts';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
+import { LoaderComponent } from './pages/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -19,8 +20,9 @@ import { BarChartComponent } from './components/bar-chart/bar-chart.component';
     LineChartComponent,
     SummaryComponent,
     BarChartComponent,
+    LoaderComponent,
   ],
-  exports: [MainComponent],
+  exports: [MainComponent, LoaderComponent],
   imports: [CommonModule, HttpClientModule, NgChartsModule],
 })
 export class DashboardModule {}

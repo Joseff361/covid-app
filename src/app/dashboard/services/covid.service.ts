@@ -31,10 +31,4 @@ export class CovidService {
       )
       .pipe(catchError(() => of([])));
   }
-
-  public setCurrentCountryData(country: string): void {
-    this.getCountryData(country, 'confirmed').subscribe((data) => {
-      if (data.length > 0) this.currentCountryData.next(data);
-    });
-  }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { CharData, Status, CasesPerMonth } from '../../interfaces';
 import { CovidService } from '../../services/covid.service';
+import { SharedService } from '../../services/shared.service';
 import { months, yearCode } from '../../shared';
 
 const MONTHS_LIMIT: number = 10;
@@ -16,7 +17,10 @@ export class LineChartComponent implements OnInit {
   public lineChartData: ChartConfiguration['data'] | null = null;
   public lineChartOptions: ChartConfiguration['options'];
 
-  constructor(public covidService: CovidService) {}
+  constructor(
+    public covidService: CovidService,
+    private sharedService: SharedService
+  ) {}
 
   private createUniqueKey(month: number, year: number): number {
     return yearCode[year] + month;
@@ -86,6 +90,7 @@ export class LineChartComponent implements OnInit {
 
   ngOnInit(): void {
     this.covidService.currentCountryData.subscribe((data) => {
+      this.sharedService.loading.next(true);
       if (data.length > 0) {
         const casesPerMonthObj = this.createCasesPerMonthObj(data);
 
@@ -118,6 +123,8 @@ export class LineChartComponent implements OnInit {
             },
           },
         };
+
+        this.sharedService.loading.next(false);
       }
     });
   }

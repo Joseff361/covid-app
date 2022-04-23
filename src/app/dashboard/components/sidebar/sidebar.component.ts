@@ -30,6 +30,12 @@ export class SidebarComponent implements OnInit {
   }
 
   setCountryData(countryTag: string) {
-    this.covidService.setCurrentCountryData(countryTag);
+    this.covidService
+      .getCountryData(countryTag, 'confirmed')
+      .subscribe((data) => {
+        if (data.length > 0) {
+          this.covidService.currentCountryData.next(data);
+        }
+      });
   }
 }

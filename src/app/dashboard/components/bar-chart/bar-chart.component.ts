@@ -4,6 +4,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { CharData, Status } from '../../interfaces';
 import { CovidService } from '../../services/covid.service';
 import { switchMap } from 'rxjs';
+import { SharedService } from '../../services/shared.service';
 
 const COUNTRY_TO_COMPARE = 'Peru';
 
@@ -19,7 +20,10 @@ export class BarChartComponent implements OnInit {
   public casesPerYearArr: CharData[] = [];
   public country: string = '';
 
-  constructor(private covidService: CovidService) {}
+  constructor(
+    private covidService: CovidService,
+    private sharedService: SharedService
+  ) {}
 
   private createCasesPerYearObj(data: Status[]): Record<number, number> {
     const casesPerYear: Record<number, number> = {};
@@ -57,6 +61,7 @@ export class BarChartComponent implements OnInit {
     this.covidService.currentCountryData
       .pipe(
         switchMap((data) => {
+          this.sharedService.loading.next(true);
           if (data.length > 0) {
             const casesPerYearObj = this.createCasesPerYearObj(data);
             this.casesPerYearArr = this.createCasesPerYearArr(casesPerYearObj);
@@ -89,6 +94,8 @@ export class BarChartComponent implements OnInit {
               },
             ],
           };
+
+          this.sharedService.loading.next(false);
         }
       });
   }
