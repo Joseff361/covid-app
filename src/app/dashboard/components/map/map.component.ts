@@ -4,6 +4,7 @@ import { switchMap } from 'rxjs';
 import { CountryService } from '../../services/country.service';
 import { CovidService } from '../../services/covid.service';
 import { SharedService } from '../../services/shared.service';
+import { icon, Marker } from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -17,6 +18,17 @@ export class MapComponent {
   public zoom: number = 4.5;
   public marker!: L.Marker<any>;
 
+  public iconDefault = icon({
+    iconRetinaUrl: 'assets/marker-icon-2x.png',
+    iconUrl: 'assets/marker-icon.png',
+    shadowUrl: 'assets/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, -28],
+    shadowSize: [41, 41],
+  });
+
   constructor(
     private covidService: CovidService,
     private countryService: CountryService,
@@ -24,6 +36,8 @@ export class MapComponent {
   ) {}
 
   private initMap(): void {
+    L.Marker.prototype.options.icon = this.iconDefault;
+
     this.map = L.map('map', {
       center: [this.latitude, this.longitude],
       zoom: this.zoom,
