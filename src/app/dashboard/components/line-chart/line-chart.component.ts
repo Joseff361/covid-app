@@ -15,8 +15,6 @@ export class LineChartComponent implements OnInit {
   public lineChartType: ChartType = 'line';
   public lineChartData: ChartConfiguration['data'] | null = null;
   public lineChartOptions: ChartConfiguration['options'];
-  public casesPerMonth: Record<number, CasesPerMonth> = {};
-  public pieceOfMonth: dataMonths[] = [];
 
   constructor(public covidService: CovidService) {}
 
@@ -24,11 +22,15 @@ export class LineChartComponent implements OnInit {
     return yearCode[year] + month;
   }
 
-  private createLabel(month: number, year: number): string {
-    return `${months[month]} ${year}`;
+  private createLabel(month: number, year?: number): string {
+    return `${months[month]}`;
   }
 
-  private setCasesPerMonth(data: Status[]): void {
+  private createCasesPerMonthObj(
+    data: Status[]
+  ): Record<number, CasesPerMonth> {
+    const casesPerMonth: Record<number, CasesPerMonth> = {};
+
     // Set the final cases in each month
     for (let i = 0; i < data.length; i++) {
       const currentTotalCases: number = Number(data[i].Cases);
@@ -44,55 +46,58 @@ export class LineChartComponent implements OnInit {
         currentDate.getFullYear()
       );
 
-      this.casesPerMonth[key] = {
+      casesPerMonth[key] = {
         cases: currentTotalCases,
         label,
       };
     }
 
     // Set the final cases per month
-    const keys = Object.keys(this.casesPerMonth);
+    const keys = Object.keys(casesPerMonth);
 
     keys.forEach((key, index) => {
       if (index > 0) {
-        this.casesPerMonth[Number(key)].cases -=
-          this.casesPerMonth[Number(keys[index - 1])].cases;
+        casesPerMonth[Number(key)].cases -=
+          casesPerMonth[Number(keys[index - 1])].cases;
       }
     });
+
+    return casesPerMonth;
   }
 
-  private transformDataMonths(): void {
-    const keys = Object.keys(this.casesPerMonth);
+  private createCasesPerMonthArr(
+    casesPerMonth: Record<number, CasesPerMonth>,
+    monthsLimit: number
+  ): dataMonths[] {
+    const pieceOfMonth: dataMonths[] = [];
+    const keys = Object.keys(casesPerMonth);
 
     keys.reverse().forEach((key, index) => {
-      if (index < MONTHS_LIMIT) {
-        this.pieceOfMonth.push({
-          label: this.casesPerMonth[Number(key)].label,
-          cases: this.casesPerMonth[Number(key)].cases,
+      if (index < monthsLimit) {
+        pieceOfMonth.push({
+          label: casesPerMonth[Number(key)].label,
+          cases: casesPerMonth[Number(key)].cases,
         });
       }
     });
 
-    this.pieceOfMonth.reverse();
-  }
-
-  private cleanChart(): void {
-    this.casesPerMonth = {};
-    this.pieceOfMonth = [];
+    return pieceOfMonth.reverse();
   }
 
   ngOnInit(): void {
     this.covidService.currentCountryData.subscribe((data) => {
       if (data.length > 0) {
-        this.cleanChart();
+        const casesPerMonthObj = this.createCasesPerMonthObj(data);
 
-        this.setCasesPerMonth(data);
-        this.transformDataMonths();
+        const casesPerMonthArr = this.createCasesPerMonthArr(
+          casesPerMonthObj,
+          MONTHS_LIMIT
+        );
 
         this.lineChartData = {
           datasets: [
             {
-              data: this.pieceOfMonth.map((data) => data.cases),
+              data: casesPerMonthArr.map((data) => data.cases),
               label: 'Cases per Month',
               backgroundColor: '#222222',
               borderColor: '#FFF',
@@ -103,7 +108,7 @@ export class LineChartComponent implements OnInit {
               fill: 'origin',
             },
           ],
-          labels: this.pieceOfMonth.map((data) => data.label),
+          labels: casesPerMonthArr.map((data) => data.label),
         };
 
         this.lineChartOptions = {
