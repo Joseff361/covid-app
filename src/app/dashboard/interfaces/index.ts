@@ -44,7 +44,7 @@ export interface CasesPerMonth {
   cases: number;
 }
 
-export interface dataMonths {
+export interface CharData {
   label: string;
   cases: number;
 }

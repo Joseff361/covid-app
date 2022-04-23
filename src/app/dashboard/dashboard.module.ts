@@ -5,10 +5,10 @@ import { MainComponent } from './pages/main/main.component';
 import { MapComponent } from './components/map/map.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { NgChartsModule } from 'ng2-charts';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 
 @NgModule({
   declarations: [
@@ -16,9 +16,9 @@ import { NgChartsModule } from 'ng2-charts';
     MapComponent,
     HeaderComponent,
     SidebarComponent,
-    FooterComponent,
     LineChartComponent,
     SummaryComponent,
+    BarChartComponent,
   ],
   exports: [MainComponent],
   imports: [CommonModule, HttpClientModule, NgChartsModule],

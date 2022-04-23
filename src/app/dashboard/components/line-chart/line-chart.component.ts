@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartConfiguration, ChartType } from 'chart.js';
-import { dataMonths, Status, CasesPerMonth } from '../../interfaces';
+import { CharData, Status, CasesPerMonth } from '../../interfaces';
 import { CovidService } from '../../services/covid.service';
 import { months, yearCode } from '../../shared';
 
@@ -68,8 +68,8 @@ export class LineChartComponent implements OnInit {
   private createCasesPerMonthArr(
     casesPerMonth: Record<number, CasesPerMonth>,
     limit: number
-  ): dataMonths[] {
-    const pieceOfMonth: dataMonths[] = [];
+  ): CharData[] {
+    const pieceOfMonth: CharData[] = [];
     const keys = Object.keys(casesPerMonth);
 
     keys.reverse().forEach((key, index) => {

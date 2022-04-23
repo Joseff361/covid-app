@@ -20,19 +20,20 @@ export class CovidService {
     );
   }
 
-  private getCountryData(country: string): Observable<Status[]> {
+  public getCountryData(country: string, status: string): Observable<Status[]> {
     return this.http
       .get<Status[]>(
         environment.covidBaseURL +
           '/total/dayone/country/' +
           country +
-          '/status/confirmed'
+          '/status/' +
+          status
       )
       .pipe(catchError(() => of([])));
   }
 
   public setCurrentCountryData(country: string): void {
-    this.getCountryData(country).subscribe((data) => {
+    this.getCountryData(country, 'confirmed').subscribe((data) => {
       if (data.length > 0) this.currentCountryData.next(data);
     });
   }
