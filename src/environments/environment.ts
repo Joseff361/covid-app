@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseURL: 'https://api.covid19api.com',
+  covidBaseURL: 'https://api.covid19api.com',
+  restBaseURL: 'https://restcountries.com/v3.1'
 };
 
 /*

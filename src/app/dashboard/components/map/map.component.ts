@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import { switchMap } from 'rxjs';
+import { CountryService } from '../../services/country.service';
 import { CovidService } from '../../services/covid.service';
 
 @Component({
@@ -13,7 +15,10 @@ export class MapComponent {
   public latitude: number = -98.5795;
   public zoom: number = 4.5;
 
-  constructor(private covidService: CovidService) {}
+  constructor(
+    private covidService: CovidService,
+    private countryService: CountryService
+  ) {}
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -39,18 +44,24 @@ export class MapComponent {
   ngAfterViewInit(): void {
     this.initMap();
 
-    this.covidService.currentCountryData.subscribe((data) => {
-      const countrySelected = data[0];
-      this.latitude = Number(countrySelected.Lat);
-      this.longitude = Number(countrySelected.Lon);
-      this.map.setView([this.latitude, this.longitude], this.zoom);
+    this.covidService.currentCountryData
+      .pipe(
+        switchMap((data) => this.countryService.getCountry(data[0].Country))
+      )
+      .subscribe((country) => {
+        if (country.length > 0) {
+          const countrySelected = country[0];
+          const latitude = countrySelected.latlng[0];
+          const longitude = countrySelected.latlng[1];
+          this.map.setView([latitude, longitude], this.zoom);
 
-      const text = `${countrySelected.Country} (${countrySelected.CountryCode})`;
+          const text = `${countrySelected.name.common} ${countrySelected.flag}`;
 
-      L.marker([this.latitude, this.longitude])
-        .addTo(this.map)
-        .bindPopup(text)
-        .openPopup();
-    });
+          L.marker([latitude, longitude])
+            .addTo(this.map)
+            .bindPopup(text)
+            .openPopup();
+        }
+      });
   }
 }

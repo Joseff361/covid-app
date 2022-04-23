@@ -13,7 +13,7 @@ export class CovidService {
   public currentCountryData = new Subject<Status[]>();
 
   public getSummary(): Observable<Summary> {
-    return this.http.get<Summary>(environment.baseURL + '/summary').pipe(
+    return this.http.get<Summary>(environment.covidBaseURL + '/summary').pipe(
       catchError(() => {
         return of({} as Summary);
       })
@@ -23,7 +23,7 @@ export class CovidService {
   private getCountryData(country: string): Observable<Status[]> {
     return this.http
       .get<Status[]>(
-        environment.baseURL +
+        environment.covidBaseURL +
           '/total/dayone/country/' +
           country +
           '/status/confirmed'

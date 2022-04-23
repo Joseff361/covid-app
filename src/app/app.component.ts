@@ -12,6 +12,6 @@ export class AppComponent implements OnInit {
   constructor(private covidService: CovidService) {}
 
   ngOnInit(): void {
-    this.covidService.setCurrentCountryData('pe');
+    this.covidService.setCurrentCountryData('FR');
   }
 }

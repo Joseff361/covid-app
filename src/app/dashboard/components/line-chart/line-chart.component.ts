@@ -67,13 +67,13 @@ export class LineChartComponent implements OnInit {
 
   private createCasesPerMonthArr(
     casesPerMonth: Record<number, CasesPerMonth>,
-    monthsLimit: number
+    limit: number
   ): dataMonths[] {
     const pieceOfMonth: dataMonths[] = [];
     const keys = Object.keys(casesPerMonth);
 
     keys.reverse().forEach((key, index) => {
-      if (index < monthsLimit) {
+      if (index < limit) {
         pieceOfMonth.push({
           label: casesPerMonth[Number(key)].label,
           cases: casesPerMonth[Number(key)].cases,
