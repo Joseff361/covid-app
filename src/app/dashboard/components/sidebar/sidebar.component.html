@@ -2,7 +2,11 @@
   <div class="sidebar__cases">
     <div class="sidebar__title">Total positive cases by country</div>
     <div class="sidebar__countries">
-      <div *ngFor="let country of countriesData" class="sidebar__country">
+      <div
+        *ngFor="let country of countriesData"
+        (click)="setCountryData(country.CountryCode)"
+        class="sidebar__country"
+      >
         {{ country.Country }}:
         <span>{{ country.TotalConfirmed | number }}</span>
         <span>({{ country.NewConfirmed | number }})</span>

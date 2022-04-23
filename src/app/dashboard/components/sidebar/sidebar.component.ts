@@ -29,4 +29,8 @@ export class SidebarComponent implements OnInit {
     const minutes = current.getMinutes();
     return `${hours}:${minutes}`;
   }
+
+  setCountryData(countryTag: string) {
+    this.covidService.setCurrentCountryData(countryTag);
+  }
 }

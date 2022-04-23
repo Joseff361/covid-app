@@ -7,17 +7,18 @@ import { CovidService } from '../../services/covid.service';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit {
+export class MapComponent {
   private map!: L.Map;
   public longitude: number = 39.8282;
   public latitude: number = -98.5795;
+  public zoom: number = 4.5;
 
   constructor(private covidService: CovidService) {}
 
   private initMap(): void {
     this.map = L.map('map', {
       center: [this.latitude, this.longitude],
-      zoom: 4.5,
+      zoom: this.zoom,
     });
 
     const tiles = L.tileLayer(
@@ -32,19 +33,24 @@ export class MapComponent implements OnInit {
 
     tiles.addTo(this.map);
 
-    L.marker([39.8282, -98.5795]).addTo(this.map);
-  }
-
-  ngOnInit(): void {
-    this.covidService.getCountryData('peru').subscribe((data) => {
-      this.latitude = Number(data[0].Lat);
-      this.longitude = Number(data[0].Lon);
-
-      this.map.setView([this.latitude, this.longitude], 4.5);
-    });
+    L.marker([this.latitude, this.longitude]).addTo(this.map);
   }
 
   ngAfterViewInit(): void {
     this.initMap();
+
+    this.covidService.currentCountryData.subscribe((data) => {
+      const countrySelected = data[0];
+      this.latitude = Number(countrySelected.Lat);
+      this.longitude = Number(countrySelected.Lon);
+      this.map.setView([this.latitude, this.longitude], this.zoom);
+
+      const text = `${countrySelected.Country} (${countrySelected.CountryCode})`;
+
+      L.marker([this.latitude, this.longitude])
+        .addTo(this.map)
+        .bindPopup(text)
+        .openPopup();
+    });
   }
 }

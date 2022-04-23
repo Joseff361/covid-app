@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, Observable, of, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Status, Summary } from '../interfaces';
 
@@ -10,7 +10,9 @@ import { Status, Summary } from '../interfaces';
 export class CovidService {
   constructor(private http: HttpClient) {}
 
-  getSummary(): Observable<Summary> {
+  public currentCountryData = new Subject<Status[]>();
+
+  public getSummary(): Observable<Summary> {
     return this.http.get<Summary>(environment.baseURL + '/summary').pipe(
       catchError(() => {
         return of({} as Summary);
@@ -18,14 +20,17 @@ export class CovidService {
     );
   }
 
-  getCountryData(country: string): Observable<Status[]> {
+  private getCountryData(country: string): Observable<Status[]> {
     return this.http
       .get<Status[]>(
-        environment.baseURL +
-          '/country/' +
-          country +
-          '/status/confirmed?from=2020-03-01T00:00:00Z&to2022-04-19T00:00:00Z'
+        environment.baseURL + '/dayone/country/' + country + '/status/confirmed'
       )
       .pipe(catchError(() => of([])));
+  }
+
+  public setCurrentCountryData(country: string): void {
+    this.getCountryData(country).subscribe((data) => {
+      if (data.length > 0) this.currentCountryData.next(data);
+    });
   }
 }

@@ -22,9 +22,14 @@
   &__country {
     color: var(--c-silver);
     margin-bottom: 10px;
+    cursor: pointer;
 
     & span:first-child {
       color: var(--c-yellow);
+    }
+
+    &:hover {
+      background-color: #555353;
     }
   }
 
